@@ -7,14 +7,18 @@
     const emit = defineEmits<{
         'view-changed': [string]
     }>()
+
+    function handleViewChange(view: string) {
+        emit('view-changed', view)
+    }
 </script>
 
 <template>
     <div class="header-content">
         <div class="logo">Legacy Butikk</div>
         <nav>
-            <a class="active: currentView === 'products'">Handlekurv ({{ cartCount }})</a>
-            <a class="active: currentView === 'cart'">Produkter</a>
+            <a class="active: currentView === 'products'" @click="handleViewChange('products')">Handlekurv ({{ cartCount }})</a>
+            <a class="active: currentView === 'cart'" @click="handleViewChange('cart')">Produkter</a>
         </nav>
     </div>
 </template>
