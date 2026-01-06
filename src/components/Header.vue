@@ -15,8 +15,8 @@
     <div class="header-content">
         <div class="logo">Legacy Butikk</div>
         <nav>
-            <a data-view="products" class="${currentView === 'products' ? 'active' : ''}">Produkter</a>
-            <a data-view="cart" class="${currentView === 'cart' ? 'active' : ''}">Handlekurv (${cartCount})</a>
+            <a class="active: currentView === 'products'">Handlekurv ({{ cartCount }})</a>
+            <a class="active: currentView === 'cart'">Produkter</a>
         </nav>
     </div>
 </template>
