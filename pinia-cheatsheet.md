@@ -1,4 +1,4 @@
-# Pinia Basics
+# Pinia Basics (Composition API)
 
 ## Setup in main.ts
 
@@ -8,62 +8,55 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 
 const app = createApp(App)
-const pinia = createPinia()
-
-app.use(pinia)
+app.use(createPinia())
 app.mount('#app')
 ```
 
 ---
 
-## Define a Store
+## Define a Store (Composition API)
 
 ```typescript
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 
-export const useCounterStore = defineStore('counter', {
-  state: (): CounterState => ({ ... }),
-  actions: { ... },
-  getters: { ... },
-});
+export const useCounterStore = defineStore('counter', () => {
+  // state, actions, getters here
+  return { /* expose everything */ }
+})
 ```
 
 ---
 
-## State
+## State (use ref)
 
 ```typescript
-state: (): CounterState => ({
-  count: 0,
-}),
+const count = ref(0)
+const items = ref<Item[]>([])
+const isLoading = ref(false)
+const errorMessage = ref<string | null>(null)
 ```
 
 ---
 
-## Actions
+## Actions (regular functions)
 
 ```typescript
-actions: {
-  increment() {
-    this.count++;
-  },
-  decrement() {
-    if (this.count > 0) 
-      this.count--;
-  },
-},
+function increment() {
+  count.value++
+}
+
+function decrement() {
+  if (count.value > 0) count.value--
+}
 ```
 
 ---
 
-## Getters
+## Getters (use computed)
 
 ```typescript
-getters: {
-  doubleCount(state): number {
-    return state.count * 2;
-  },
-},
+const doubleCount = computed(() => count.value * 2)
 ```
 
 ---
@@ -71,17 +64,21 @@ getters: {
 ## Getter with List
 
 ```typescript
-getters: {
-  totalBooks(state): number {
-    return state.books.length;
-  },
-  totalInventoryValue(state): number {
-    return state.books.reduce(
-      (total, book) => total + book.price * book.quantity,
-      0
-    );
-  },
-},
+const totalBooks = computed(() => items.value.length)
+
+const totalValue = computed(() =>
+  items.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
+)
+```
+
+---
+
+## Getter Function (for lookup by id)
+
+```typescript
+function getItemById(id: number) {
+  return items.value.find(item => item.id === id)
+}
 ```
 
 ---
@@ -89,19 +86,97 @@ getters: {
 ## Async Action (fetch)
 
 ```typescript
-async fetchBooks() {
-  this.isLoading = true
-  this.errorMessage = null
+async function fetchItems() {
+  isLoading.value = true
+  errorMessage.value = null
   try {
-    const response = await fetch("/books.json")
-    if (!response.ok) throw new Error("Failed to load")
-    this.books = await response.json()
+    const response = await fetch('/items.json')
+    if (!response.ok) throw new Error('Failed to load')
+    items.value = await response.json()
   } catch (error) {
-    this.errorMessage = error instanceof Error ? error.message : "Unknown error"
+    errorMessage.value = error instanceof Error ? error.message : 'Unknown error'
   } finally {
-    this.isLoading = false
+    isLoading.value = false
   }
-},
+}
+```
+
+---
+
+## Return (expose everything)
+
+```typescript
+return {
+  // State
+  count,
+  items,
+  isLoading,
+  errorMessage,
+  // Actions
+  increment,
+  decrement,
+  fetchItems,
+  // Getters
+  doubleCount,
+  totalBooks,
+  totalValue,
+  getItemById
+}
+```
+
+---
+
+## Full Store Example
+
+```typescript
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import type { Book } from '../types'
+
+export const useBookStore = defineStore('books', () => {
+  const books = ref<Book[]>([])
+  const isLoading = ref(false)
+  const errorMessage = ref<string | null>(null)
+
+  async function fetchBooks() {
+    isLoading.value = true
+    errorMessage.value = null
+    try {
+      const response = await fetch('/books.json')
+      if (!response.ok) throw new Error('Failed to load')
+      books.value = await response.json()
+    } catch (error) {
+      errorMessage.value = error instanceof Error ? error.message : 'Unknown error'
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  function updateQuantity(id: number, quantity: number) {
+    const book = books.value.find(b => b.id === id)
+    if (book) book.quantity = quantity
+  }
+
+  function removeBook(id: number) {
+    books.value = books.value.filter(b => b.id !== id)
+  }
+
+  const totalBooks = computed(() => books.value.length)
+  const totalValue = computed(() =>
+    books.value.reduce((sum, b) => sum + b.price * b.quantity, 0)
+  )
+
+  return {
+    books,
+    isLoading,
+    errorMessage,
+    fetchBooks,
+    updateQuantity,
+    removeBook,
+    totalBooks,
+    totalValue
+  }
+})
 ```
 
 ---
@@ -109,77 +184,59 @@ async fetchBooks() {
 ## Use Store in Component
 
 ```typescript
-import { useCounterStore } from './stores/counterStore'
+import { useBookStore } from './stores/bookStore'
 
-const counterStore = useCounterStore()
+const store = useBookStore()
 ```
 
 ---
 
-## Read State and Getters
+## Access State/Getters (same as before)
 
 ```vue
-<p>{{ counterStore.count }}</p>
-<p>{{ counterStore.doubleCount }}</p>
+<p>{{ store.totalBooks }}</p>
+<p>{{ store.totalValue }}</p>
 ```
 
 ---
 
-## Call Actions
+## Call Actions (same as before)
 
 ```vue
-<button @click="counterStore.increment()">+</button>
+<button @click="store.increment()">+</button>
 ```
 
 ---
 
-## Pass Store Data as Props
-
-```vue
-<CounterView
-  :count="counterStore.count"
-  :doubleCount="counterStore.doubleCount"
-  @increment="counterStore.increment()"
-  @decrement="counterStore.decrement()"
-/>
-```
-
----
-
-## Define Props
+## Key Difference: .value
 
 ```typescript
-const props = defineProps<{
-  count: number,
-  doubleCount: number
-}>()
+// Inside store: use .value
+count.value++
+items.value.push(item)
+
+// In template: no .value needed
+{{ store.count }}
 ```
 
 ---
 
-## Define Emits
+## Options → Composition Cheat
 
-```typescript
-const emits = defineEmits<{
-  increment: [],
-  decrement: []
-}>()
-```
-
----
-
-## Emit Events
-
-```vue
-<button @click="emits('increment')">Increment</button>
-```
+| Options API | Composition API |
+|-------------|-----------------|
+| `state: () => ({ count: 0 })` | `const count = ref(0)` |
+| `this.count++` | `count.value++` |
+| `getters: { double(state) {...} }` | `const double = computed(() => ...)` |
+| `actions: { increment() {...} }` | `function increment() {...}` |
+| *(nothing)* | `return { count, double, increment }` |
 
 ---
 
 ## Key Rules
 
-- **State** = stored data
-- **Getters** = calculated from state  
-- **Actions** = change state
-- **Container** knows the store, passes props down
-- **Presentation** only gets props and emits events
+- **State** = `ref()`
+- **Getters** = `computed()`
+- **Actions** = regular `function`
+- **Always** use `.value` inside the store
+- **Always** return everything you want to expose
