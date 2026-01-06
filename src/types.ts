@@ -9,8 +9,8 @@ export interface CartItem extends Product {
     quantity: number;
 }
 
-export interface AppState {
-    products: Product[];
-    cart: CartItem[];
-    currentView: 'products' | 'cart';
-}
+// export interface AppState {
+//     products: Product[];
+//     cart: CartItem[];
+//     currentView: 'products' | 'cart';
+// }
