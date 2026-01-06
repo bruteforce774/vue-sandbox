@@ -1,4 +1,14 @@
 <script setup lang="ts">
+    import { ref } from 'vue';
+
+    const props = defineProps<{
+        cartCount: number,
+        currentView: string
+    }>()
+
+    const emit = defineEmits<{
+        'view-changed': [string]
+    }>()
 </script>
 
 <template>
