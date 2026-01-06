@@ -24,7 +24,7 @@
 </template>
 
 <style scoped>
-    :host {
+    :root {
             display: block;
             background-color: #333;
             color: white;
