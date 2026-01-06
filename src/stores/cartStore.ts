@@ -13,5 +13,12 @@ export const useCartStore = defineStore('cart', () => {
   const cartTotal = computed(() =>
     cartItems.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
   )
-  return { cartItems, cartCount, cartTotal }
+
+  function updateQuantity(productId: number, quantity: number) {
+    const item = cartItems.value.find((item) => item.id === productId)
+    if (item) {
+      item.quantity = quantity
+    }
+  }
+  return { cartItems, cartCount, cartTotal, updateQuantity }
 })
