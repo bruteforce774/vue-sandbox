@@ -16,11 +16,11 @@ function goToProducts() {
     emit('go-to-products')
 }
 
-function updateQuantity(productId: number, quantity: number) {
+function handleUpdateQuantity(productId: number, quantity: number) {
     emit('update-quantity', productId, quantity)
 }
 
-function removeFromCart(productId: number) {
+function handleRemoveFromCart(productId: number) {
     emit('remove-from-cart', productId)
 }
 </script>
