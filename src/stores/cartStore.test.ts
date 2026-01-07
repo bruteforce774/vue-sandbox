@@ -47,7 +47,15 @@ describe('cartStore', () => {
     expect(cartStore.cartItems.length).toBe(2)
     expect(cartStore.cartCount).toBe(3)
     expect(cartStore.cartTotal).toBe(40)
-  }
+  })
+
+  it('increments quantity when adding existing item', () => {
+    const cartStore = useCartStore()
+    cartStore.addToCart({ id: 1, name: 'Product 1', price: 10, quantity: 1, image: 'image1.jpg' })
+    cartStore.addToCart({ id: 1, name: 'Product 1', price: 10, quantity: 2, image: 'image1.jpg' })
+    expect(cartStore.cartItems.length).toBe(1)
+    expect(cartStore.cartItems[0]?.quantity).toBe(3)
+})
 
   it('removes item from cart correctly', () => {
     const cartStore = useCartStore()
