@@ -20,5 +20,19 @@ export const useCartStore = defineStore('cart', () => {
       item.quantity = quantity
     }
   }
-  return { cartItems, cartCount, cartTotal, updateQuantity }
+
+  function addToCart(newItem: CartItem) {
+    const existingItem = cartItems.value.find((item) => item.id === newItem.id)
+    if (existingItem) {
+      existingItem.quantity += newItem.quantity
+    } else {
+      cartItems.value.push(newItem)
+    }
+  }
+
+  function removeFromCart(productId: number) {
+    cartItems.value = cartItems.value.filter((item) => item.id !== productId)
+  }
+
+  return { cartItems, cartCount, cartTotal, updateQuantity, addToCart, removeFromCart }
 })
