@@ -5,7 +5,7 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-    'view-changed': [string]
+    'view-changed': [view: string]
 }>()
 
 function handleViewChange(view: string) {
