@@ -69,5 +69,5 @@ describe('cartStore', () => {
     expect(cartStore.cartItems[0]!.id).toBe(2)
     expect(cartStore.cartCount).toBe(1)
     expect(cartStore.cartTotal).toBe(20)
-  }
+  })
 })
