@@ -6,7 +6,5 @@ import './style.css'
 </script>
 
 <template>
-  <div id="app">
-    <ShopView />
-  </div>
+  <router-view></router-view>
 </template>
