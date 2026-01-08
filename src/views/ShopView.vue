@@ -10,8 +10,8 @@
 </script>
 
 <template>
-    <Header :cart-count="cartStore.cartCount" :current-view="'products'" />
-    <ProductList :products="cartStore.products"/>
+    <Header :cart-count="cartStore.cartCount" :current-view="'products'" @view-changed="(view) => console.log('view changed:', view)" />
+    <ProductList :products="cartStore.products" @add-to-cart="(productId) => console.log('Add to cart:', productId)" />
 </template>
 
 <style scoped>
