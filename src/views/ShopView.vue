@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useCartStore } from '../stores/cartStore';
 import Header from '../components/Header.vue';
 import ProductList from '../components/ProductList.vue';
 import Cart from '../components/Cart.vue';
+import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const cartStore = useCartStore();
-const currentView = ref('products');
+const route = useRoute();
+const router = useRouter();
 
 onMounted(() => {
     cartStore.fetchProducts();
@@ -15,18 +18,17 @@ onMounted(() => {
 
 <template>
     <div>
-        <Header :cart-count="cartStore.cartCount" :current-view="currentView"
-            @view-changed="(view) => currentView = view" />
+        <Header :cart-count="cartStore.cartCount" :current-view="route.name as string"
+            @view-changed="(view) => router.push({ name: view })" />
     </div>
-    <div v-if="currentView === 'products'">
+    <div v-if="route.name === 'products'">
         <ProductList :products="cartStore.products" @add-to-cart="cartStore.addToCart" />
     </div>
     <div v-else>
-        <Cart :items="cartStore.cartItems" 
-        :total="cartStore.cartTotal" 
-        @go-to-products="currentView = 'products'" 
-        @update-quantity="(productId, quantity) => cartStore.updateQuantity(productId, quantity)"
-        @remove-from-cart="cartStore.removeFromCart" />
+        <Cart :items="cartStore.cartItems" :total="cartStore.cartTotal"
+            @go-to-products="router.push({ name: 'products' })"
+            @update-quantity="(productId, quantity) => cartStore.updateQuantity(productId, quantity)"
+            @remove-from-cart="cartStore.removeFromCart" />
     </div>
 </template>
 
