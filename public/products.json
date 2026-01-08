@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Mechanical Keyboard",
+    "price": 1200,
+    "image": "https://placehold.co/200x200?text=Keyboard"
+  },
+  {
+    "id": 2,
+    "name": "Raspberry Pi 4",
+    "price": 800,
+    "image": "https://placehold.co/200x200?text=Raspberry+Pi+4"
+  },
+  {
+    "id": 3,
+    "name": "External SSD 1TB",
+    "price": 1500,
+    "image": "https://placehold.co/200x200?text=SSD+1TB"
+  },
+  {
+    "id": 4,
+    "name": "Ergonomic Mouse",
+    "price": 600,
+    "image": "https://placehold.co/200x200?text=Mouse"
+  },
+  {
+    "id": 5,
+    "name": "4K Monitor",
+    "price": 4000,
+    "image": "https://placehold.co/200x200?text=4K+Monitor"
+  },
+  {
+    "id": 6,
+    "name": "USB-C Hub",
+    "price": 300,
+    "image": "https://placehold.co/200x200?text=USB-C+Hub"
+  }
+]

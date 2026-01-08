@@ -38,23 +38,27 @@ describe('cartStore', () => {
     expect(cartStore.cartTotal).toBe(70)
   })
 
-  it('adds new item to cart correctly', () => {
+it('adds new item to cart correctly', () => {
     const cartStore = useCartStore()
-    cartStore.cartItems = [
-      { id: 1, name: 'Product 1', price: 10, quantity: 2, image: 'image1.jpg' },
-    ] as CartItem[]
-    cartStore.addToCart({ id: 2, name: 'Product 2', price: 20, quantity: 1, image: 'image2.jpg' })
-    expect(cartStore.cartItems.length).toBe(2)
-    expect(cartStore.cartCount).toBe(3)
-    expect(cartStore.cartTotal).toBe(40)
-  })
+    cartStore.products = [
+        { id: 1, name: 'Product 1', price: 10, image: 'image1.jpg' },
+        { id: 2, name: 'Product 2', price: 20, image: 'image2.jpg' },
+    ]
+    cartStore.addToCart(1)
+    expect(cartStore.cartItems.length).toBe(1)
+    expect(cartStore.cartItems[0]?.quantity).toBe(1)
+})
 
   it('increments quantity when adding existing item', () => {
     const cartStore = useCartStore()
-    cartStore.addToCart({ id: 1, name: 'Product 1', price: 10, quantity: 1, image: 'image1.jpg' })
-    cartStore.addToCart({ id: 1, name: 'Product 1', price: 10, quantity: 2, image: 'image1.jpg' })
+    cartStore.products = [
+        { id: 1, name: 'Product 1', price: 10, image: 'image1.jpg' },
+        { id: 2, name: 'Product 2', price: 20, image: 'image2.jpg' },
+    ]
+    cartStore.addToCart(1)
+    cartStore.addToCart(1)
   expect(cartStore.cartItems.length).toBe(1)
-  expect(cartStore.cartItems[0]?.quantity).toBe(3)
+  expect(cartStore.cartItems[0]?.quantity).toBe(2)
 })
 
   it('removes item from cart correctly', () => {
