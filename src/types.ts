@@ -8,9 +8,3 @@ export interface Product {
 export interface CartItem extends Product {
     quantity: number;
 }
-
-// export interface AppState {
-//     products: Product[];
-//     cart: CartItem[];
-//     currentView: 'products' | 'cart';
-// }
