@@ -6,11 +6,16 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-    'add-to-cart': [productId: number]
+    'add-to-cart': [productId: number],
+    'view-product': [productId: number]
 }>()
 
 function handleAddToCart(productId: number) {
     emit('add-to-cart', productId)
+}
+
+function handleViewProduct(productId: number) {
+    emit('view-product', productId)
 }
 </script>
 
@@ -20,7 +25,7 @@ function handleAddToCart(productId: number) {
             <h2>Our Products</h2>
             <div class="product-grid">
                 <div v-for="product in products" :key="product.id" class="product-card">
-                    <img :src="product.image" :alt="product.name">
+                    <img :src="product.image" :alt="product.name" @click="handleViewProduct(product.id)">
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.price }} NOK</p>
                     <button class="btn" @click="handleAddToCart(product.id)">Legg i handlevogn </button>
