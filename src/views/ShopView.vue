@@ -6,6 +6,7 @@ import ProductList from '../components/ProductList.vue';
 import Cart from '../components/Cart.vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
+import ProductDetail from '../components/ProductDetail.vue';
 
 const cartStore = useCartStore();
 const route = useRoute();
@@ -24,11 +25,14 @@ onMounted(() => {
     <div v-if="route.name === 'products'">
         <ProductList :products="cartStore.products" @add-to-cart="cartStore.addToCart" />
     </div>
-    <div v-else>
+    <div v-else-if="route.name === 'cart'">
         <Cart :items="cartStore.cartItems" :total="cartStore.cartTotal"
             @go-to-products="router.push({ name: 'products' })"
             @update-quantity="(productId, quantity) => cartStore.updateQuantity(productId, quantity)"
             @remove-from-cart="cartStore.removeFromCart" />
+    </div>
+    <div v-else>
+        <ProductDetail :product="cartStore.products.find(p => p.id === Number(route.params.id))" @add-to-cart="cartStore.addToCart" />
     </div>
 </template>
 
