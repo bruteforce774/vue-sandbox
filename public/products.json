@@ -3,36 +3,42 @@
     "id": 1,
     "name": "Mechanical Keyboard",
     "price": 1200,
-    "image": "https://placehold.co/200x200?text=Keyboard"
+    "image": "https://placehold.co/200x200?text=Keyboard",
+    "description": "Tactile mechanical keyboard with RGB backlighting and Cherry MX switches."
   },
   {
     "id": 2,
     "name": "Raspberry Pi 4",
     "price": 800,
-    "image": "https://placehold.co/200x200?text=Raspberry+Pi+4"
+    "image": "https://placehold.co/200x200?text=Raspberry+Pi+4",
+    "description": "Compact single-board computer with 4GB RAM, perfect for DIY projects."
   },
   {
     "id": 3,
     "name": "External SSD 1TB",
     "price": 1500,
-    "image": "https://placehold.co/200x200?text=SSD+1TB"
+    "image": "https://placehold.co/200x200?text=SSD+1TB",
+    "description": "Fast portable storage with USB-C connectivity and 1TB capacity."
   },
   {
     "id": 4,
     "name": "Ergonomic Mouse",
     "price": 600,
-    "image": "https://placehold.co/200x200?text=Mouse"
+    "image": "https://placehold.co/200x200?text=Mouse",
+    "description": "Vertical ergonomic mouse designed to reduce wrist strain."
   },
   {
     "id": 5,
     "name": "4K Monitor",
     "price": 4000,
-    "image": "https://placehold.co/200x200?text=4K+Monitor"
+    "image": "https://placehold.co/200x200?text=4K+Monitor",
+    "description": "27-inch 4K IPS display with accurate colors and wide viewing angles."
   },
   {
     "id": 6,
     "name": "USB-C Hub",
     "price": 300,
-    "image": "https://placehold.co/200x200?text=USB-C+Hub"
+    "image": "https://placehold.co/200x200?text=USB-C+Hub",
+    "description": "7-in-1 hub with HDMI, USB-A, SD card reader, and power delivery."
   }
 ]
