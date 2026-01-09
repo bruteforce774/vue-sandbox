@@ -23,7 +23,8 @@ onMounted(() => {
             @view-changed="(view) => router.push({ name: view })" />
     </div>
     <div v-if="route.name === 'products'">
-        <ProductList :products="cartStore.products" @add-to-cart="cartStore.addToCart" />
+        <ProductList :products="cartStore.products" @add-to-cart="cartStore.addToCart"
+            @view-product="(productId) => router.push({ name: 'product-detail', params: { id: productId } })" />
     </div>
     <div v-else-if="route.name === 'cart'">
         <Cart :items="cartStore.cartItems" :total="cartStore.cartTotal"
@@ -32,7 +33,8 @@ onMounted(() => {
             @remove-from-cart="cartStore.removeFromCart" />
     </div>
     <div v-else>
-        <ProductDetail :product="cartStore.products.find(p => p.id === Number(route.params.id))" @add-to-cart="cartStore.addToCart" />
+        <ProductDetail :product="cartStore.products.find(p => p.id === Number(route.params.id))"
+            @add-to-cart="cartStore.addToCart" />
     </div>
 </template>
 
