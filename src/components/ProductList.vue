@@ -37,7 +37,7 @@ function handleViewProduct(productId: number) {
             <div class="search-bar">
                 <input type="text" 
                         v-model="searchTerm" 
-                        placeholder="Search products...">
+                        placeholder="Search products..."
                 />
             </div>
             <div class="product-grid">
