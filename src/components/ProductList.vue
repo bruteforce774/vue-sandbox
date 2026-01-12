@@ -1,9 +1,20 @@
 <script setup lang="ts">
-import type { Product } from '../types';
+  import { ref, computed } from 'vue';
+  import type { Product } from '../types';
 
 defineProps<{
     products: Product[]
 }>()
+
+const searchTerm = ref('')
+const filteredProducts = computed(() => {
+    if (!searchTerm.value) {
+        return products
+    }
+    return products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+    )
+})
 
 const emit = defineEmits<{
     'add-to-cart': [productId: number],
@@ -23,8 +34,14 @@ function handleViewProduct(productId: number) {
     <div class="host-container">
         <div class="container">
             <h2>Our Products</h2>
+            <div class="search-bar">
+                <input type="text" 
+                        v-model="searchTerm" 
+                        placeholder="Search products...">
+                />
+            </div>
             <div class="product-grid">
-                <div v-for="product in products" :key="product.id" class="product-card">
+                <div v-for="product in filteredProducts" :key="product.id" class="product-card">
                     <img :src="product.image" :alt="product.name" @click="handleViewProduct(product.id)">
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.price }} NOK</p>
