@@ -2,7 +2,7 @@
   import { ref, computed } from 'vue';
   import type { Product } from '../types';
 
-defineProps<{
+const props = defineProps<{
     products: Product[]
 }>()
 
