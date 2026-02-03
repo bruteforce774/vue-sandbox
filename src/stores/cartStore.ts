@@ -43,6 +43,7 @@ export const useCartStore = defineStore('cart', () => {
     isLoading.value = true
     errorMessage.value = null
     try {
+      await new Promise(resolve => setTimeout(resolve, 2000))
       const response = await fetch('/products.json')
       if (!response.ok) throw new Error('Failed to load')
       products.value = await response.json()
