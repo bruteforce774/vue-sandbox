@@ -33,7 +33,8 @@ onMounted(() => {
             @remove-from-cart="cartStore.removeFromCart" />
     </div>
     <div v-else>
-        <ProductDetail :product="cartStore.products.find(p => p.id === Number(route.params.id))"
+        <p v-if="cartStore.isLoading">Loading...</p>
+        <ProductDetail v-else :product="cartStore.products.find(p => p.id === Number(route.params.id))"
             @add-to-cart="cartStore.addToCart" />
     </div>
 </template>
