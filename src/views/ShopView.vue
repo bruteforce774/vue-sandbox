@@ -29,7 +29,7 @@ onMounted(() => {
     <div v-else-if="route.name === 'cart'">
         <Cart :items="cartStore.cartItems" :total="cartStore.cartTotal"
             @go-to-products="router.push({ name: 'products' })"
-            @update-quantity="(productId, quantity) => cartStore.updateQuantity(productId, quantity)"
+            @update-quantity="cartStore.updateQuantity"
             @remove-from-cart="cartStore.removeFromCart" />
     </div>
     <div v-else>
