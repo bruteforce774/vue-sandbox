@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import ShopView from "../views/ShopView.vue";
-import ProductDetail from "../components/ProductDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(),
