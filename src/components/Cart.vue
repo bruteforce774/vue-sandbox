@@ -26,7 +26,7 @@ function handleRemoveFromCart(productId: number) {
 
 function handleInputChange(productId: number, event: Event) {
     const value = Number((event.target as HTMLInputElement).value)
-    emit('update-quantity', productId, Math.max(1, value))
+    emit('update-quantity', productId, value)
 }
 
 function handleCheckout() {

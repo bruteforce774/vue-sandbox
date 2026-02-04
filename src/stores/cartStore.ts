@@ -19,7 +19,7 @@ export const useCartStore = defineStore('cart', () => {
   function updateQuantity(productId: number, quantity: number) {
     const item = cartItems.value.find((item) => item.id === productId)
     if (item) {
-      item.quantity = quantity
+      item.quantity = Math.max(1, quantity)
     }
   }
 
